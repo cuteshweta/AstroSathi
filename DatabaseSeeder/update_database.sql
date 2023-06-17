@@ -4,11 +4,10 @@
 
 CREATE TABLE `astro_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` varchar(100) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `middle_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `gender` enum('1','2','0','','') NOT NULL,
+  `gender` enum('F1','M','other') NOT NULL,
   `mobile_no` varchar(50) NOT NULL,
   `mail_id` varchar(100) NOT NULL,
   `mother_name` varchar(100) NOT NULL,
@@ -18,6 +17,7 @@ CREATE TABLE `astro_user` (
   `state_id` int(11) NOT NULL,
   `pincode` varchar(50) NOT NULL,
   `nationality` varchar(100) NOT NULL,
+  `religion` varchar(50) NOT NULL,
   `birth_date` date NOT NULL,
   `birth_time` varchar(50) NOT NULL,
   `birth_place` int(11) NOT NULL,

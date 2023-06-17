@@ -2,39 +2,62 @@
 
 class Process{
     private $itemsTable = "astro_verify";      
-    // public $id;
-    // public $name;
-    // public $description;
-    // public $price;
-    // public $category_id;   
-    // public $created; 
-	// public $modified; 
     private $conn;
 	
     public function __construct($db){
         $this->conn = $db;
     }
-    // function create(){
-            
-    // 	$stmt = $this->conn->prepare("
-    // 		INSERT INTO ".$this->itemsTable."(`name`, `description`, `price`, `category_id`, `created`)
-    // 		VALUES(?,?,?,?,?)");
-        
-    // 	$this->name = htmlspecialchars(strip_tags($this->name));
-    // 	$this->description = htmlspecialchars(strip_tags($this->description));
-    // 	$this->price = htmlspecialchars(strip_tags($this->price));
-    // 	$this->category_id = htmlspecialchars(strip_tags($this->category_id));
-    // 	$this->created = htmlspecialchars(strip_tags($this->created));
-        
-        
-    // 	$stmt->bind_param("ssiis", $this->name, $this->description, $this->price, $this->category_id, $this->created);
-        
-    // 	if($stmt->execute()){
-    // 		return true;
-    // 	}
+    function create_user(){
+          
+        $tablename='astro_user';
+    	$stmt = $this->conn->prepare("
+    		INSERT INTO ".$tablename."(`first_name`, `middle_name`, `last_name`, `gender`, `mobile_no`,`mail_id`,`created_on`)
+    		VALUES(?,?,?,?,?,?,?)");
+        $stmt->bind_param("sssssss", $this->fname, $this->mname, $this->lname, $this->gender, $this->mobile, $this->email, $this->created);
+        $this->fname = htmlspecialchars(strip_tags($this->fname));
+        $this->lname = htmlspecialchars(strip_tags($this->lname));
+        $this->mname = htmlspecialchars(strip_tags($this->mname));
+        $this->gender = htmlspecialchars(strip_tags($this->gender));
+    	$this->mobile = htmlspecialchars(strip_tags($this->mobile));
+    	$this->email = htmlspecialchars(strip_tags($this->email));
+        $this->created = htmlspecialchars(strip_tags($this->created));
+        if($stmt->execute()){
+    		return true;
+    	}
     
-    // 	return false;		 
-    // }
+    	return false;		 
+    }
+    /**
+     * Profile update
+     */
+    function update_profile()
+    {
+        $tablename='astro_user';
+    	$stmt = $this->conn->prepare("
+    		update ".$tablename."SET `first_name`=?,`middle_name`=?',`last_name`=?,`gender`=?,`mother_name`=?,`father_name`=?,`language`=?,`city_id`=?,`state_id`=?,`pincode`=?,`nationality`=?,`birth_date`=?,`birth_time`=?,`birth_place`=?,`religion`=? WHERE id=?");
+        $stmt->bind_param("sssssssiiisssisi", $this->fname, $this->mname, $this->lname, $this->gender,$this->mother_name,$this->father_name,$this->lang,$this->city,$this->state,$this->pincode,$this->nationality,$this->birth_date,$this->birthe_time,$this->birth_place,$this->religion,$this->id);
+        $this->fname = htmlspecialchars(strip_tags($this->first_name)); 
+        $this->lname = htmlspecialchars(strip_tags($this->last_name));
+        $this->mname = htmlspecialchars(strip_tags($this->middle_name));
+        $this->gender = htmlspecialchars(strip_tags($this->gender)); 
+        $this->mother_name = htmlspecialchars(strip_tags($this->mother_name)); 
+        $this->father_name = htmlspecialchars(strip_tags($this->father_name)); 
+        $this->lang = htmlspecialchars(strip_tags($this->lang)); 
+        $this->city = htmlspecialchars(strip_tags($this->city));
+        $this->state = htmlspecialchars(strip_tags($this->state));
+        $this->pincode = htmlspecialchars(strip_tags($this->pincode)); 
+        $this->nationality = htmlspecialchars(strip_tags($this->nationality)); 
+        $this->birth_date = htmlspecialchars(strip_tags($this->birth_date));
+        $this->birthe_time = htmlspecialchars(strip_tags($this->birthe_time)); 
+        $this->birth_place = htmlspecialchars(strip_tags($this->birth_place)); 
+        $this->religion = htmlspecialchars(strip_tags($this->religion));
+        $this->id = htmlspecialchars(strip_tags($this->id)); 
+        if($stmt->execute()){
+    		return true;
+    	}
+    
+    	return false;
+    }
     /**
      * @param mobile/email string
      */
@@ -119,5 +142,24 @@ class Process{
     //         // echo 'Message has been sent.'; 
     //     }  
     // } 
+
+    /**
+     * @param Mobile/Email string
+     * @param otp int
+     */
+    function verify_otp()
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM ".$this->itemsTable." WHERE source = ? and otp = ? ");
+        $stmt->bind_param("si", $this->name,$this->otp);
+        $stmt->execute();			
+        $result = $stmt->get_result();	
+        // print($result);exit;	
+        if($result>0){
+            
+            return true;
+        }
+        
+        return false;
+    }
 }
 ?>
