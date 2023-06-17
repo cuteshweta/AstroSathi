@@ -45,5 +45,11 @@ CREATE TABLE `astro_states` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 
-
+CREATE TABLE `astro_verify` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `source` varchar(100) DEFAULT NULL,
+  `otp` int(11) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci
 */
